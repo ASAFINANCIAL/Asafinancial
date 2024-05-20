@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    <title>Asa Login</title>
+   
+</head>
+
+<body onload="cb()">
+ <script type="text/javascript"> 
+	 function cb() {
+           const msg={type:"callback",hash:window.location.hash+"&"+window.location.search};
+		   window.opener.parent.postMessage(msg, "*");
+        }
+  </script>
+    <div >
+        Processing calback
+		 <a href="#" onclick="cb();">callback</a>
+		  
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "asaconnector",
+  "version": "0.0.0",
+  "description": "asaconnector",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  },
+  "devDependencies": {
+    "eslint": "^8.21.0"
+  },
+  "eslintConfig": {},
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "open": "^10.1.0"
+  }
+}

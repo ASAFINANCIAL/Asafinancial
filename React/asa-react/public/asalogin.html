@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>test login process</title>
+</head>
+<body style="font-size:x-large; margin: 10px; padding: 10px; ">
+    <div id="popUpDiv" style="display:none;"></div>
+    <script type="text/javascript"> 
+        var popUpWindow;
+        var accesstoken; //<- after sucess login it will contain accesstoken
+        var asaconsumerCode;//<- after sucess login it will contain consumer code
+        const mylocation=window.location.origin
+        const asaOpenApiUri= "https://openapi.asacore.com/";
+        const subscriptionKey="PUT your key";
+        const asafintechCode= "Put your fintech code";
+        const applicationCode= "put your app code"
+        const authorizationKey= "put subscription key";
+        const baseAsaHeaders={
+                    "Content-Type": "application/json",
+                    "Ocp-Apim-Subscription-Key":subscriptionKey,
+                    "X-ASA-APIVersion":"1.07",
+                    "X-ASA-FintechCode":asafintechCode,
+                    "X-ASA-FintechApplicationCode":applicationCode,
+                    "X-ASA-FintechAuthorizationKey":authorizationKey,
+
+                }
+       
+        popup=(n,popupuri)=> {
+		   var uri =popupuri; 
+           popUpWindow = window.open(uri,n, "height=500,width=500");
+        }
+        fetchAutorization =async ()=>{
+            try
+            {
+           
+            const body={
+                asafintechCode: asafintechCode,
+                applicationCode: applicationCode,
+                authorizationKey: authorizationKey,
+                redirectUrl:mylocation+"/asasilent.html",
+                redirectFailureUrl:mylocation+"/asasilent.html",
+                subscriptionKey:subscriptionKey,
+                scope: "openid",
+                apiVersion: "1.07"
+            }
+            const headers={...baseAsaHeaders,
+                    "anyyourheader": "any your header value"
+                }
+            const url=asaOpenApiUri+"Authentication/Authorization";
+            const resp=await  fetch(url,
+                {
+                    method:"POST",
+                    headers:headers,
+                    body:JSON.stringify(body)
+                }
+             );
+             return await resp.json();
+            }
+            catch(err){
+                fillElement("error",err);
+            }
+        }
+
+         loginwithasa=async ()=> {
+           const asaauth=await fetchAutorization();
+           if(!asaauth){
+                fillElement("auth","failed to authorize");
+                return;
+           }
+           fillElement("auth",JSON.stringify(asaauth));
+		   var uri = asaauth.data.message;
+           popup("popUpDiv",uri)
+           
+        }
+        closepopup=()=>{
+            if(popUpWindow){
+                setTimeout(() => {
+                    popUpWindow.close();
+                    popUpWindow=undefined;
+                }, 1000);
+            }
+        }
+		window.addEventListener(
+			  "message",
+			  (event) => {
+			   if(event.source==popUpWindow){
+
+                    if(event.data && event.data.type=="callback"){
+                        const searchParams = new URLSearchParams(event.data.hash.replace("?", ""));
+                        accesstoken=searchParams.get("access_token") ||  searchParams.get("bearerToken");
+                        asaconsumerCode=searchParams.get("asaconsumerCode")
+                        for (const p of searchParams) {
+                        console.log(p);
+                        }
+                        console.log(event.data);
+                        fillElement("userauth",`user logged asaconsumercode ${asaconsumerCode} , token ${accesstoken}`);
+                        closepopup();
+                    }
+				}
+			  },
+			  false,
+			);
+        fillElement =(id,inner)=>{
+            const element=document.getElementById(id);
+            element.innerHTML=inner;
+        }
+        userinfo=async()=>{
+            try
+            {
+             var headers;
+             if(accesstoken){
+                headers={...baseAsaHeaders,
+                    Authorization: 'Bearer ' + accesstoken,
+                    "X-ASA-ConsumerCode":asaconsumerCode
+                }           
+             }
+             const resp=await  fetch(asaOpenApiUri+"Consumer",//"Authentication/UserInfo",
+                {
+                    headers:headers
+                }
+             );
+             if(!resp.ok){
+                fillElement("error",`fail with status ${resp.status}  ${resp.statusText} `);
+                return;
+             }
+             
+             const result=await resp.json();
+              fillElement("userinfo",JSON.stringify(result));
+            }
+            catch(err)
+            {
+                fillElement("error",err);
+            }
+        }
+
+		
+    </script>
+    <div >
+
+        <div style="margin-top: 20px;">
+            <a href="#" onclick="loginwithasa();">Login with asa</a>
+        </div>
+        <div style="margin-top: 20px;">
+            <a href="#" onclick="userinfo();">UserInfo</a>
+        </div>
+    </div> 
+ <div>Errors</div>    
+ <div id="error"> </div>
+ <div>Authorizations with ASA</div>    
+ <div id="auth"></div>
+ <div>User Authorizations</div>    
+ <div id="userauth"> </div>   
+ <div>User Info</div>        
+ <div id="userinfo"></div>
+ 
+    
+ 
+</body>
+</html>
