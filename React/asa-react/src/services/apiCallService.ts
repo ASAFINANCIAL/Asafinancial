@@ -38,8 +38,7 @@ const callApiGet =async (path:string,state:IAsaState)=>{
     if(state.token) 
         headers.Authorization= 'Bearer ' + state.token
     headers['X-ASA-ConsumerCode']=state.asaConsumerCode
-    console.error('headers',headers)
-    console.log(`${Config.asaOpenApiUri}${path}`)
+
     try {
 
         const { data } = await axios.get(
@@ -48,6 +47,7 @@ const callApiGet =async (path:string,state:IAsaState)=>{
             headers  :{...headers},
         }
     )
+        console.log(data)
         return data;
     }
     catch(err){

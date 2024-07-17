@@ -9,10 +9,20 @@ const ConsumerInfo=()=>{
     const [state,setState]=useContext(AsaStateContext)
     const {data} = useAsaQuery([CONSUMER_PATH,state.asaConsumerCode],CONSUMER_PATH);
     return (
-        <Container>
-            Consumer info
-        </Container>
-
+        <>
+        {data &&
+            <Container>
+            <Row>
+                <Col>AsaConsumerCode</Col>
+                <Col>{data.data.asaConsumerCode}</Col>
+            </Row>
+            <Row>
+                <Col>Email</Col>
+                <Col>{data.data.email}</Col>
+            </Row>
+            </Container>
+        }
+        </>
     )
 
 }
