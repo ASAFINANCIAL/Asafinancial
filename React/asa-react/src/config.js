@@ -5,6 +5,7 @@ class Config{
     static asafintechCode= "962922346";
     static applicationCode= "2009"
     static authorizationKey= "4BQGMJ2NBeBKN4c7qvEc";
+    static asaApiVersion= "1.07";
     static baseAsaHeaders={
                 "Content-Type": "application/json",
                 "Ocp-Apim-Subscription-Key":Config.subscriptionKey,
