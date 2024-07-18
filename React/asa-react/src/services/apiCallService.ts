@@ -1,8 +1,18 @@
-import {IAsaState, AsaStateContext} from '../components/asaStateProvider'
-import { DataLoaderProvider, useDataLoader } from '../components/dataloader';
+import {IAsaState } from '../components/asaStateProvider'
+
 import { Config } from '../config'
-import React, { useState, useEffect,useContext } from "react";
-import axios from "axios";
+
+import axios ,{AxiosError} from "axios";
+
+interface IAsaResponse<TData>{
+    status:number,
+    message:string,
+    data:TData
+}
+interface IDataResponseAhtorization{
+    field:string
+    message:string
+}
 interface BaseHeaders{
     'Ocp-Apim-Subscription-Key':string
     'Access-Control-Allow-Origin':string
@@ -38,9 +48,6 @@ const callApiGet =async (path:string,state:IAsaState)=>{
     if(state.token) 
         headers.Authorization= 'Bearer ' + state.token
     headers['X-ASA-ConsumerCode']=state.asaConsumerCode
-
-    try {
-
         const { data } = await axios.get(
             `${Config.asaOpenApiUri}${path}`,
         {
@@ -49,12 +56,42 @@ const callApiGet =async (path:string,state:IAsaState)=>{
     )
         console.log(data)
         return data;
-    }
-    catch(err){
-        console.error(err)
-
-    }
 
 }
 
-export {callApiGet}
+async function apiCallPost<TResponse>(path:string,body:any,asaState:IAsaState|undefined):Promise<TResponse | undefined>  {
+    try
+    {
+        const headers=getHeaders()
+        if(asaState){ 
+            headers.Authorization= 'Bearer ' + asaState.token
+            headers['X-ASA-ConsumerCode']=asaState.asaConsumerCode
+        }
+        const url=Config.asaOpenApiUri+path;
+        const { data}  = await axios.post(url ,body, { headers  :{...headers}, })
+
+        return data
+    }
+    catch(err){
+        const axerr=err as AxiosError
+        
+        return axerr?.response?.data as TResponse
+    }
+
+}
+const apiCallAutorization=async ():Promise<IAsaResponse<IDataResponseAhtorization> | undefined>  =>{
+
+    const mylocation=window.location.origin
+    const body={
+        asafintechCode: Config.asafintechCode,
+        applicationCode: Config.applicationCode,
+        authorizationKey: Config.authorizationKey,
+        redirectUrl:mylocation+"/asasilent.html",
+        redirectFailureUrl:mylocation+"/asasilenterror.html",
+        subscriptionKey:Config.subscriptionKey,
+        scope: "openid",
+        apiVersion: Config.asaApiVersion
+    }
+    return await apiCallPost("Authentication/Authorization",body,undefined)
+}
+export {callApiGet,apiCallAutorization,type IAsaResponse,apiCallPost}

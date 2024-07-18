@@ -1,22 +1,26 @@
 import React, { useState,createContext,ReactNode  } from 'react';
- 
+const STORAGE_KEY="AsaState"
 interface IAsaState{
   asaConsumerCode:number,
-  token:string
+  token:string | undefined
 }
 interface Props {
   children?: ReactNode
   // any props that come into the component
 }
+type setStateFunc = (asaState:IAsaState) => void;
 
-const initialData:IAsaState={asaConsumerCode:-1,token:''}  
-const AsaStateContext = createContext<[IAsaState,React.Dispatch<React.SetStateAction<IAsaState>>]>([initialData,(s)=>{}]);
+const initialData:IAsaState= JSON.parse(localStorage.getItem(STORAGE_KEY) || '0') || {asaConsumerCode:-1,token:undefined}  
+const AsaStateContext = createContext<[IAsaState,setStateFunc]>([initialData,(s)=>{}]);
  
 const AsaStateProvider = ({ children, ...props }: Props) => {
   const [state, setState] = useState(initialData);
- 
+  const wrapsetState=(asaState:IAsaState)=>{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(asaState))
+    setState(asaState)
+  }
   return (
-    <AsaStateContext.Provider value={[state,setState]}>
+    <AsaStateContext.Provider value={[state,wrapsetState]}>
       {children}
     </AsaStateContext.Provider>
   );
