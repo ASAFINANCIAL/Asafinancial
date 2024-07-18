@@ -3,27 +3,27 @@ import { Container, Row, Col, Form, Button,Navbar } from 'react-bootstrap';
 import {useAsaQuery} from '../hooks/asaQuery'
 import {IAsaState, AsaStateContext} from '../components/asaStateProvider'
 import { IAsaResponse } from '../services/apiCallService';
-const HOLDINGS_PATH='Holdings'
-interface IHolding{
-    asaType:string,
-    description:string,
-    costBasis:number,
-    marketValue:number
+const ACCOUNTTYPE_PATH='Account/AccountTypes'
+interface IAccountType{
+    accountType:string,
+    fullAccountType:string,
+    description:number,
+
 }
-interface IDataResponseHoldings{
-    consumerHoldings:IHolding[],
+interface IDataResponseAccountType{
+    consumerHoldings:IAccountType[],
     [propName: string]: any;
 }
-const renderHoldingLine=(h:IHolding)=>
-    <Row key={h.description}>
-        <Col>{h.asaType}</Col>
-        <Col sm={6}>{h.description}</Col>
-        <Col>{h.costBasis}</Col>
-        <Col>{h.marketValue}</Col>
+const renderAccountTypeLine=(a:IAccountType)=>
+    <Row key={a.fullAccountType}>
+        <Col>{a.accountType}</Col>
+        <Col sm={6}>{a.description}</Col>
+        <Col>{a.fullAccountType}</Col>
+        
     </Row>
-const Holdings=()=>{
+const AccountTypes=()=>{
     const [state,setState]=useContext(AsaStateContext)
-    const {data} = useAsaQuery<IDataResponseHoldings>([HOLDINGS_PATH,state.asaConsumerCode],HOLDINGS_PATH);
+    const {data} = useAsaQuery<IAccountType[]>([ACCOUNTTYPE_PATH,state.asaConsumerCode],ACCOUNTTYPE_PATH);
     if(!data){
         return (
             <div>.........</div>
@@ -47,12 +47,12 @@ const Holdings=()=>{
 
             <Container className='text-start'>
                 <Row className='fw-bold fs-4'>
-                    <Col>asaType</Col>
+                    <Col>accountType</Col>
                     <Col sm={6}>description</Col>
-                    <Col>costBasis</Col>
-                    <Col>marketValue</Col>
+                    <Col>fullAccountType</Col>
+                   
                 </Row>
-                {data.data.consumerHoldings.map((h)=>renderHoldingLine(h))}
+                {data.data.map((a)=>renderAccountTypeLine(a))}
             <Row>
                 <Col>AsaConsumerCode</Col>
                 <Col></Col>
@@ -62,4 +62,4 @@ const Holdings=()=>{
     )
 
 }
-export default Holdings
+export default AccountTypes

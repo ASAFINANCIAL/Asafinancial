@@ -2,7 +2,7 @@ import React, { useState,useContext } from 'react';
 import { Container, Row, Col, Form, Button,Navbar } from 'react-bootstrap';
 import {useAsaPostQuery} from '../hooks/asaQuery'
 import { AsaStateContext} from '../components/asaStateProvider'
-import { IAsaResponse } from '../services/apiCallService';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AllProps from './allprops';
 const TRANSACTIONS_PATH='Transactions'
@@ -18,7 +18,8 @@ interface ITransaction{
     amount:number,
     description:string,
     transactiondate:string
-
+    transactiontype:string
+    transactionid:string
 }
 
 interface IBalance{
@@ -39,8 +40,9 @@ interface ITransactions{
     marketValue:number
 }
 const renderTransactionLine=(t:ITransaction)=>
-    <Row>
+    <Row key={t.transactionid}>
         <Col>{t.transactiondate}</Col> 
+        <Col>{t.transactiontype}</Col> 
         <Col sm={6}>{t.description}</Col>
         <Col>{t.amount}</Col>
        
@@ -60,8 +62,9 @@ const renderAccount=(a:IAccount)=>
             </Row>
         </Row>
         <Row className='bg-light text-dark'>Transactions
-            <Row>
+            <Row className='bg-info text-white'>
                 <Col>date</Col> 
+                <Col>type</Col> 
                 <Col sm={6}>description</Col>
                 <Col>amount</Col>
             </Row>
@@ -69,6 +72,8 @@ const renderAccount=(a:IAccount)=>
         </Row>
     </Container>
 const Transactions=()=>{
+    
+    
     const [state,setState]=useContext(AsaStateContext)
     //todo new state if we need change request body
     const body:IRequestTransaction={
@@ -77,7 +82,7 @@ const Transactions=()=>{
     }
 
     const {data} = useAsaPostQuery<IAccountInstance[]>([TRANSACTIONS_PATH,state.asaConsumerCode],TRANSACTIONS_PATH,body);
-    console.log(data)
+   
     if(data && data.status!=200){
         return(
             <Container className='text-start'>

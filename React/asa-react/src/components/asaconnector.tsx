@@ -7,6 +7,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ConsumerInfo from "./ConsumeInfo";
 import Transfer from "./Transfer";
 import Transactions from "./Transactions";
+import AccountTypes from "./AccountTypes";
 import Holdings from "./Holdings";
 import {apiCallAutorization} from '../services/apiCallService'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -90,6 +91,7 @@ export default function AsaConnector() {
     <>
     <Navbar className="bg-body-tertiary">
       <Container>
+        <Navbar.Brand><img src='/favicon.ico'/>  </Navbar.Brand>
         <Navbar.Brand href="#home">Asa Open API</Navbar.Brand>
         <Navbar.Toggle />
         {isLogged &&
@@ -116,7 +118,7 @@ export default function AsaConnector() {
                 <Tab disabled={!isLogged}>Transfer</Tab>
                 <Tab disabled={!isLogged}>Transactions</Tab>
                 <Tab disabled={!isLogged}>Holdings</Tab>
-                <Tab>Other</Tab>
+                <Tab>AccountTypes</Tab>
             </TabList>
             <TabPanel>
                 
@@ -134,7 +136,7 @@ export default function AsaConnector() {
                 <Holdings/>
             </TabPanel>
             <TabPanel>
-                Other
+                <AccountTypes/>
             </TabPanel>
 
             </Tabs>
