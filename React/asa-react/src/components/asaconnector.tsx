@@ -1,8 +1,8 @@
-import { Config } from "../config.js";
+
 import React, { useState,useContext } from 'react';
-import { Container, Row, Col, Form, Button,Navbar } from 'react-bootstrap';
-import {IAsaState, AsaStateContext} from './asaStateProvider'
-import { DataLoaderProvider, useDataLoader } from './dataloader';
+import { Container,  Button,Navbar } from 'react-bootstrap';
+import {AsaStateContext} from './asaStateProvider'
+import {  useDataLoader } from './dataloader';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ConsumerInfo from "./ConsumeInfo";
 import Transfer from "./Transfer";
@@ -40,7 +40,6 @@ export default function AsaConnector() {
         setState({asaConsumerCode:0,token:undefined})
     }
     const showpopup=(target:string,popupuri:string)=>{
-        var uri =popupuri; 
         popupWindow = window.open(popupuri,target, "height=500,width=500");
 
         var cleartimer = setInterval(()=> { 
@@ -91,7 +90,7 @@ export default function AsaConnector() {
     <>
     <Navbar className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand><img src='/favicon.ico'/>  </Navbar.Brand>
+        <Navbar.Brand><img src='/favicon.ico' alt='OpenApi'/>  </Navbar.Brand>
         <Navbar.Brand href="#home">Asa Open API</Navbar.Brand>
         <Navbar.Toggle />
         {isLogged &&

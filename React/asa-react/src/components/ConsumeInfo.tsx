@@ -1,7 +1,7 @@
-import React, { useState,useContext } from 'react';
-import { Container, Row, Col, Form, Button,Navbar } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import {useAsaQuery} from '../hooks/asaQuery'
-import {IAsaState, AsaStateContext} from '../components/asaStateProvider'
+import { AsaStateContext} from '../components/asaStateProvider'
 
 const CONSUMER_PATH='Consumer'
 interface IDataResponseConsumer{
@@ -10,7 +10,7 @@ interface IDataResponseConsumer{
     [propName: string]: any;
 }
 const ConsumerInfo=()=>{
-    const [state,setState]=useContext(AsaStateContext)
+    const [state]=useContext(AsaStateContext)
     const {data} = useAsaQuery<IDataResponseConsumer>([CONSUMER_PATH,state.asaConsumerCode],CONSUMER_PATH);
     return (
         <>

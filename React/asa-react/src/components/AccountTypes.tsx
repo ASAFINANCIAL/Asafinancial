@@ -1,8 +1,8 @@
-import React, { useState,useContext } from 'react';
-import { Container, Row, Col, Form, Button,Navbar } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import {useAsaQuery} from '../hooks/asaQuery'
-import {IAsaState, AsaStateContext} from '../components/asaStateProvider'
-import { IAsaResponse } from '../services/apiCallService';
+import { AsaStateContext} from '../components/asaStateProvider'
+
 const ACCOUNTTYPE_PATH='Account/AccountTypes'
 interface IAccountType{
     accountType:string,
@@ -10,10 +10,7 @@ interface IAccountType{
     description:number,
 
 }
-interface IDataResponseAccountType{
-    consumerHoldings:IAccountType[],
-    [propName: string]: any;
-}
+
 const renderAccountTypeLine=(a:IAccountType)=>
     <Row key={a.fullAccountType}>
         <Col>{a.accountType}</Col>
@@ -22,14 +19,14 @@ const renderAccountTypeLine=(a:IAccountType)=>
         
     </Row>
 const AccountTypes=()=>{
-    const [state,setState]=useContext(AsaStateContext)
+    const [state]=useContext(AsaStateContext)
     const {data} = useAsaQuery<IAccountType[]>([ACCOUNTTYPE_PATH,state.asaConsumerCode],ACCOUNTTYPE_PATH);
     if(!data){
         return (
             <div>.........</div>
         )
     }
-    if(data && data.status!=200){
+    if(data && data.status!==200){
         return(
             <Container className='text-start'>
             <Row>

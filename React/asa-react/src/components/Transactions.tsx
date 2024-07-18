@@ -1,5 +1,5 @@
-import React, { useState,useContext } from 'react';
-import { Container, Row, Col, Form, Button,Navbar } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import {useAsaPostQuery} from '../hooks/asaQuery'
 import { AsaStateContext} from '../components/asaStateProvider'
 
@@ -33,12 +33,7 @@ interface IAccount{
     balances:IBalance
     transactions:ITransaction[]
 }
-interface ITransactions{
-    asaType:string,
-    description:string,
-    costBasis:number,
-    marketValue:number
-}
+
 const renderTransactionLine=(t:ITransaction)=>
     <Row key={t.transactionid}>
         <Col>{t.transactiondate}</Col> 
@@ -74,7 +69,7 @@ const renderAccount=(a:IAccount)=>
 const Transactions=()=>{
     
     
-    const [state,setState]=useContext(AsaStateContext)
+    const [state]=useContext(AsaStateContext)
     //todo new state if we need change request body
     const body:IRequestTransaction={
         asaConsumerCode:state.asaConsumerCode,
@@ -83,7 +78,7 @@ const Transactions=()=>{
 
     const {data} = useAsaPostQuery<IAccountInstance[]>([TRANSACTIONS_PATH,state.asaConsumerCode],TRANSACTIONS_PATH,body);
    
-    if(data && data.status!=200){
+    if(data && data.status!==200){
         return(
             <Container className='text-start'>
             <Row>

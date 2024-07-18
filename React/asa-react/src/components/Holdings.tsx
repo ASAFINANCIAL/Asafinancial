@@ -1,8 +1,8 @@
-import React, { useState,useContext } from 'react';
-import { Container, Row, Col, Form, Button,Navbar } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Container, Row, Col} from 'react-bootstrap';
 import {useAsaQuery} from '../hooks/asaQuery'
-import {IAsaState, AsaStateContext} from '../components/asaStateProvider'
-import { IAsaResponse } from '../services/apiCallService';
+import { AsaStateContext} from '../components/asaStateProvider'
+
 const HOLDINGS_PATH='Holdings'
 interface IHolding{
     asaType:string,
@@ -22,14 +22,14 @@ const renderHoldingLine=(h:IHolding)=>
         <Col>{h.marketValue}</Col>
     </Row>
 const Holdings=()=>{
-    const [state,setState]=useContext(AsaStateContext)
+    const [state]=useContext(AsaStateContext)
     const {data} = useAsaQuery<IDataResponseHoldings>([HOLDINGS_PATH,state.asaConsumerCode],HOLDINGS_PATH);
     if(!data){
         return (
             <div>.........</div>
         )
     }
-    if(data && data.status!=200){
+    if(data && data.status!==200){
         return(
             <Container className='text-start'>
             <Row>
@@ -53,10 +53,7 @@ const Holdings=()=>{
                     <Col>marketValue</Col>
                 </Row>
                 {data.data.consumerHoldings.map((h)=>renderHoldingLine(h))}
-            <Row>
-                <Col>AsaConsumerCode</Col>
-                <Col></Col>
-            </Row>
+
             </Container>
         
     )
