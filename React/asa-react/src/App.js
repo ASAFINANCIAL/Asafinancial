@@ -3,20 +3,22 @@ import './App.css';
 import AsaConnector from './components/asaconnector'; 
 import { AsaStateProvider } from './components/asaStateProvider';
 import { DataLoaderProvider } from './components/dataloader';
-
+import ErrorBoundary from './components/ErrorBoundary';
 import { QueryClient, QueryClientProvider } from 'react-query';
 const queryClient = new QueryClient();
 function App() {
   return (
     <div className="App">
+      <ErrorBoundary>
         <AsaStateProvider>
           <DataLoaderProvider>
           <QueryClientProvider client={queryClient}>
             <AsaConnector/>
-              <img src={logo} className="App-logo" alt="logo" />
+              
             </QueryClientProvider>
           </DataLoaderProvider>
         </AsaStateProvider>
+        </ErrorBoundary>
     </div>
   );
 }

@@ -1,25 +1,82 @@
 import React, { useState,useContext } from 'react';
 import { Container, Row, Col, Form, Button,Navbar } from 'react-bootstrap';
 import {useAsaPostQuery} from '../hooks/asaQuery'
-import {IAsaState, AsaStateContext} from '../components/asaStateProvider'
+import { AsaStateContext} from '../components/asaStateProvider'
 import { IAsaResponse } from '../services/apiCallService';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AllProps from './allprops';
 const TRANSACTIONS_PATH='Transactions'
-interface IDataResponseTransactions{
-    [propName: string]: any;
-}
+
 interface IRequestTransaction{
     asaConsumerCode:number
     [propName: string]: any;
 }
+interface IAccountInstance{
+    account:IAccount
+}
+interface ITransaction{
+    amount:number,
+    description:string,
+    transactiondate:string
+
+}
+
+interface IBalance{
+    available:number,
+    current:number
+}
+interface IAccount{
+    account_id:string,
+    account_type:string,
+    accountname:string,
+    balances:IBalance
+    transactions:ITransaction[]
+}
+interface ITransactions{
+    asaType:string,
+    description:string,
+    costBasis:number,
+    marketValue:number
+}
+const renderTransactionLine=(t:ITransaction)=>
+    <Row>
+        <Col>{t.transactiondate}</Col> 
+        <Col sm={6}>{t.description}</Col>
+        <Col>{t.amount}</Col>
+       
+    </Row>
+const renderAccount=(a:IAccount)=>
+    <Container className='text-start'>
+        <Row className='bg-primary text-white fw-bold fs-5'>Account Name {a.accountname}</Row>
+        <AllProps src={a}/>
+        <Row className='bg-secondary text-dark'>Balances
+            <Row>
+                <Col>available</Col>
+                <Col>{a.balances.available}</Col>
+            </Row>
+            <Row>
+                <Col>current</Col>
+                <Col>{a.balances.current}</Col>
+            </Row>
+        </Row>
+        <Row className='bg-light text-dark'>Transactions
+            <Row>
+                <Col>date</Col> 
+                <Col sm={6}>description</Col>
+                <Col>amount</Col>
+            </Row>
+                {a.transactions.map((t)=>renderTransactionLine(t))}
+        </Row>
+    </Container>
 const Transactions=()=>{
     const [state,setState]=useContext(AsaStateContext)
     //todo new state if we need change request body
     const body:IRequestTransaction={
         asaConsumerCode:state.asaConsumerCode,
-        account_ids:['22']
+        account_ids:[]
     }
 
-    const {data} = useAsaPostQuery<IDataResponseTransactions>([TRANSACTIONS_PATH,state.asaConsumerCode],TRANSACTIONS_PATH,body);
+    const {data} = useAsaPostQuery<IAccountInstance[]>([TRANSACTIONS_PATH,state.asaConsumerCode],TRANSACTIONS_PATH,body);
     console.log(data)
     if(data && data.status!=200){
         return(
@@ -39,10 +96,7 @@ const Transactions=()=>{
         <>
         {data &&
             <Container>
-            <Row>
-                <Col>AsaConsumerCode</Col>
-                <Col></Col>
-            </Row>
+                 {data.data.map((a)=>renderAccount(a.account))}
             </Container>
         }
         </>
