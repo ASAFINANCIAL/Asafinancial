@@ -2,6 +2,11 @@
 
 This example demonstrates the integration of ASA using pure vanilla JavaScript, without relying on any external libraries. The provided sources include two HTML files.
 
+## configuration
+
+Before use an example yuo need to change configuration variables in `asalogin.htm` file.
+To obtain them please contact ASA team
+
 ## Sources
 
 ### 1. `asalogin.html`
