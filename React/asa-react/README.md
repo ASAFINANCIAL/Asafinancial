@@ -1,4 +1,21 @@
-# Getting Started with Create React App
+
+
+# Asa Open API  React example
+
+This small porject shows how to easily buils react app to use ASA Open API. 
+Project  contains a few importnat cases 
+
+-  Login with ASA, Open ID based protocol how to user can login to ASA and receive security token for further ai usage
+
+-  How to use several endpoint which requiresw and not requires authorization (token)
+
+
+Example contains in  the root `config.js` file. Before running a project several you setting must be configured. 
+To get those values you need contact `ASA`
+
+
+
+### Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
