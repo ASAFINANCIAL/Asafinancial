@@ -9,9 +9,11 @@ import Transfer from "./Transfer";
 import Transactions from "./Transactions";
 import AccountTypes from "./AccountTypes";
 import Holdings from "./Holdings";
+import Healthy from "./Healthy";
 import {apiCallAutorization} from '../services/apiCallService'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-tabs/style/react-tabs.css';
+
 
 
 // we can't use state, due to event came from external source and state not accesible
@@ -87,60 +89,63 @@ export default function AsaConnector() {
     } 
      
     return (
-    <>
-    <Navbar className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand><img src='/favicon.ico' alt='OpenApi'/>  </Navbar.Brand>
-        <Navbar.Brand href="#home">Asa Open API</Navbar.Brand>
-        <Navbar.Toggle />
-        {isLogged &&
-            <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-                Signed in as: <a href="#login">{state.asaConsumerCode}</a>
-            </Navbar.Text>
-            <Button variant="outline-secondary" onClick={()=>logout()} >Logout</Button>
-            </Navbar.Collapse>
-        }
-         {!isLogged &&
-            <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text className="px-2">You are Not Looged in  </Navbar.Text>
-            <Button variant="outline-success" onClick={()=>loginwithasa()} disabled={popupState}>Login</Button>
-            </Navbar.Collapse>
-        }
-      </Container>
-    </Navbar>
-    <Container>
-            <Tabs >
-            <TabList className='fw-bold fs-4'>
-                <Tab>General</Tab>
-                <Tab disabled={!isLogged}>ConsumerInfo</Tab>
-                <Tab disabled={!isLogged}>Transfer</Tab>
-                <Tab disabled={!isLogged}>Transactions</Tab>
-                <Tab disabled={!isLogged}>Holdings</Tab>
-                <Tab>AccountTypes</Tab>
-            </TabList>
-            <TabPanel>
-                
-            </TabPanel>
-            <TabPanel>
-                <ConsumerInfo/>
-            </TabPanel>
-            <TabPanel>
-                <Transfer/>
-            </TabPanel>
-            <TabPanel>
-                <Transactions/>
-            </TabPanel>
-            <TabPanel>
-                <Holdings/>
-            </TabPanel>
-            <TabPanel>
-                <AccountTypes/>
-            </TabPanel>
-
-            </Tabs>
-    </Container>
-     </>
+    <Container className='asa-container-main' >
+        <Navbar className="asa-navbar asa-grey px-5 mx-5">
+        <Container className='asa-grey'>
+            <Navbar.Brand><img src='/favicon.ico' alt='OpenApi'/>  </Navbar.Brand>
+            <Navbar.Brand className='asa-grey' href="#home">Asa Open API</Navbar.Brand>
+            <Navbar.Toggle />
+            {isLogged &&
+                <Navbar.Collapse className="justify-content-end">
+                <Navbar.Text className='asa-grey' >
+                    Signed in as: <a href="#login">{state.asaConsumerCode}</a>
+                </Navbar.Text>
+                <Button variant="outline-secondary" onClick={()=>logout()} >Logout</Button>
+                </Navbar.Collapse>
+            }
+            {!isLogged &&
+                <Navbar.Collapse className="justify-content-end">
+                <Navbar.Text className="px-2 asa-grey">You are Not Looged in  </Navbar.Text>
+                <Button variant="outline-success" onClick={()=>loginwithasa()} disabled={popupState}>Login</Button>
+                </Navbar.Collapse>
+            }
+        </Container>
+        </Navbar>
+        <Container className='asa-container-data'>
+                <Tabs >
+                <TabList className='fw-bold fs-4 asa-nav-tab'>
+                    <Tab>General</Tab>
+                    <Tab disabled={!isLogged}>ConsumerInfo</Tab>
+                    <Tab disabled={!isLogged}>Transfer</Tab>
+                    <Tab disabled={!isLogged}>Transactions</Tab>
+                    <Tab disabled={!isLogged}>Holdings</Tab>
+                    <Tab>AccountTypes</Tab>
+                    <Tab>Healthy</Tab>
+                </TabList>
+                <TabPanel>
+                    
+                </TabPanel>
+                <TabPanel>
+                    <ConsumerInfo/>
+                </TabPanel>
+                <TabPanel>
+                    <Transfer/>
+                </TabPanel>
+                <TabPanel>
+                    <Transactions/>
+                </TabPanel>
+                <TabPanel>
+                    <Holdings/>
+                </TabPanel>
+                <TabPanel>
+                    <AccountTypes/>
+                </TabPanel>
+                <TabPanel>
+                    <Healthy/>
+                </TabPanel>
+                </Tabs>
+        </Container>
+     </Container>
     )
   }
 

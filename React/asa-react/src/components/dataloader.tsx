@@ -21,12 +21,12 @@ const DataLoaderProvider = ({ children, ...props }: Props) => {
           <Col sm={8}>
         { isLoading &&
           <>
-           <Spinner animation="grow" variant="warning" />
-           <Spinner animation="grow" variant="warning" />
-           <Spinner animation="grow" variant="warning" />
-           <Spinner animation="grow" variant="warning" />
-           <Spinner animation="grow" variant="warning" />
-           <Spinner animation="grow" variant="warning" />
+           <Spinner animation="grow" variant="secondary" />
+           <Spinner animation="grow" variant="secondary" />
+           <Spinner animation="grow" variant="secondary" />
+           <Spinner animation="grow" variant="secondary" />
+           <Spinner animation="grow" variant="secondary" />
+           <Spinner animation="grow" variant="secondary" />
           </>
 
         }
