@@ -116,6 +116,7 @@ export default function AsaConnector() {
                 <Tab>General</Tab>
                 <Tab disabled={!isLogged}>ConsumerInfo</Tab>
                 <Tab disabled={!isLogged}>TransferLinks</Tab>
+                <Tab disabled={!isLogged}>Transfers</Tab>
                 <Tab disabled={!isLogged}>Transactions</Tab>
                 <Tab disabled={!isLogged}>Holdings</Tab>
                 <Tab>AccountTypes</Tab>
@@ -128,6 +129,9 @@ export default function AsaConnector() {
             </TabPanel>
             <TabPanel>
                 <TransferLinks/>
+            </TabPanel>
+            <TabPanel>
+                <Transfer/>
             </TabPanel>
             <TabPanel>
                 <Transactions/>

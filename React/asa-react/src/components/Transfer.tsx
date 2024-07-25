@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button,Navbar } from 'react-bootstrap';
 import {useAsaQuery} from '../hooks/asaQuery'
 import {IAsaState, AsaStateContext} from '../components/asaStateProvider'
 import { IAsaResponse } from '../services/apiCallService';
-const TRANSFER_PATH='Transfers/TransferLink'
+const TRANSFER_PATH='Transfers'
 interface IDataResponseTransfer{
     [propName: string]: any;
 }
@@ -29,7 +29,7 @@ const Transfer=()=>{
         {data &&
             <Container>
             <Row>
-                <Col>AsaConsumerCode</Col>
+                <Col>{data.message}</Col>
                 <Col></Col>
             </Row>
             </Container>

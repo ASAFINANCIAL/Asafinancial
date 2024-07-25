@@ -74,7 +74,7 @@ async function apiCallPost<TResponse>(path:string,body:any,asaState:IAsaState|un
     }
     catch(err){
         const axerr=err as AxiosError
-        
+        console.error(err)
         return axerr?.response?.data as TResponse
     }
 

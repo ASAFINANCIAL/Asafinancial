@@ -5,6 +5,8 @@ import { AsaStateProvider } from './components/asaStateProvider';
 import { DataLoaderProvider } from './components/dataloader';
 import ErrorBoundary from './components/ErrorBoundary';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const queryClient = new QueryClient();
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
         <AsaStateProvider>
           <DataLoaderProvider>
           <QueryClientProvider client={queryClient}>
+            <ToastContainer />
             <AsaConnector/>
               
             </QueryClientProvider>

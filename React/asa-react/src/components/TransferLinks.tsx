@@ -1,156 +1,37 @@
 import React, { useState,useContext, useRef } from 'react';
-import { Container, Row, Col, Form,Modal, Button,Navbar } from 'react-bootstrap';
-
+import { Container, Row, Col, Form,Modal, Button,Navbar,Spinner } from 'react-bootstrap';
 import {useAsaQuery} from '../hooks/asaQuery'
-
-
+import Accounts from './Accounts';
 import {IAsaState, AsaStateContext} from '../components/asaStateProvider'
-import { IAsaResponse } from '../services/apiCallService';
-const TRANSFER_PATH='Transfers/TransferLink'
-interface IDataResponseTransferLinks{
-    [propName: string]: any;
-
-}
-
-interface IAccount{
-    accountNumber:string
-    nickName:string,
-    asaConsumerCode:string,
-    accountFI:string,
-}
-interface ITransferLink{
-    linkName:string,
-    amount:number,
-    fromAccountDetailModel:IAccount,
-    toAccountDetailModel:IAccount
-    [propName: string]: any
-}
-interface PropsCreate{
-    open:boolean,
-    onclose():void
-}
-interface PropsLinkAccount{
-    prefix:string,
-    
-}
-const TransferLinkAccount=({prefix}:PropsLinkAccount)=>
-    <>
-        <Form.Group className='row' >
-            <Col>
-                <Form.Label>accountNumber</Form.Label>
-                </Col>  
-                <Col>  
-                <Form.Control placeholder="accountNumber"  name={prefix+".accountNumber"} id="AccountNumber" />
-            </Col>
-          
-        </Form.Group>
-        <Form.Group className='row' >
-            <Col>
-                <Form.Label>accountFI</Form.Label>
-                </Col>  
-                <Col>  
-                <Form.Control placeholder="accountFI"  name={prefix+".accountFI"} id="accountFI" />
-            </Col>
-          
-        </Form.Group>
-    </>
-
-const TransferLinkCreate=({open,onclose}:PropsCreate)=>{
-    const formref=useRef<HTMLFormElement>(null)
-    const [state,setState]=useContext(AsaStateContext)
-    const onSubmit=(e: React.FormEvent<HTMLFormElement>)=>{
-        e.preventDefault();
-       
-        const data = new FormData(e.target as HTMLFormElement);
-       
-        const objectData=Object.fromEntries(data.entries());
-        const createData:ITransferLink={
-            linkName:objectData.linkName as string,
-            amount:parseFloat(`${objectData.amount}`),
-            fromAccountDetailModel:{
-                    accountNumber:objectData['FromAccountDetailModel.accountNumber'] as string,
-                    nickName:'',
-                    accountFI:objectData['FromAccountDetailModel.accountFI'] as string,
-                    asaConsumerCode:`${state.asaConsumerCode}`
-                },
-            toAccountDetailModel:{
-                accountNumber:objectData['ToAccountDetailModel.accountNumber'] as string,
-                nickName:'',
-                accountFI:objectData['ToAccountDetailModel.accountFI'] as string,
-                asaConsumerCode:`${state.asaConsumerCode}`
-            }
-        }
-        console.log(createData)
-    }
-    return (
-        <div>
-        <Modal
-          show={open}
-         
-          dialogClassName="modal-90w"
-          contentClassName="modal-90w"
-          aria-labelledby="example-custom-modal-styling-title"
-        >
-          <Modal.Dialog className='modal-90w'>
-            <Modal.Header closeButton onClick={()=>onclose()}>
-              <Modal.Title className=''>Create new transfer link</Modal.Title>
-            </Modal.Header>
-  
-            <Modal.Body >
-              <Form ref={formref} className='form-row' onSubmit={(e)=> onSubmit(e)}>
-                <Form.Group className='row' >
-                  <Col>
-                  <Form.Label>Link Name</Form.Label>
-                  </Col>  
-                  <Col>  
-                    <Form.Control placeholder="Link Name"  name="linkName"  id="linkName" />
-                </Col>  
-                </Form.Group>
-  
-                <Form.Group className='row' >
-                  <Col>
-                  <Form.Label>Amount</Form.Label>
-                  </Col>  
-                  <Col>  
-                    <Form.Control placeholder="Amount"  name="amount"  id="Amount" />
-                </Col>  
-                </Form.Group>
-                <Row>
-                    <Col className='p-3 bg-light'>
-                        <Row className='fs-4'>From</Row>
-                        <Row >
-                            <TransferLinkAccount prefix='FromAccountDetailModel'/>
-                        </Row>
-                    </Col>
-                    <Col className='p-3 '>
-                        <Row className='fs-4'>To</Row>
-                        <Row>
-                            <TransferLinkAccount prefix='ToAccountDetailModel'/>
-                        </Row>
-                    </Col>
-                </Row>
+import { ITransferLink } from '../global/types';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { TransferLinkCreate } from './TransferLinkCreate';
+const TRANSFERLINK_PATH='Transfers/TransferLink'
 
 
-
-                <Button  type="submit" >Create</Button>
-              </Form>
-            </Modal.Body>
-          </Modal.Dialog>
-        </Modal>
-      </div>
-    )
-}
-const renderLinkLine=(l:ITransferLink)=>
-    <Row key={l.linkName}>
-        <Col>{l.linkName}</Col>
-        <Col>{l.amount}</Col>
-        <Col>{l.fromAccountDetailModel.accountNumber} {l.fromAccountDetailModel.nickName}</Col>
-        <Col>{l.toAccountDetailModel.accountNumber} {l.toAccountDetailModel.nickName}</Col>
-    </Row>
 const TransferLinks=()=>{
     const [state,setState]=useContext(AsaStateContext)
     const [isCreate,setisCreate]=useState(false)
-    const {data} = useAsaQuery<ITransferLink[]>([TRANSFER_PATH,state.asaConsumerCode],TRANSFER_PATH);
+    const {data} = useAsaQuery<ITransferLink[]>([TRANSFERLINK_PATH,state.asaConsumerCode],TRANSFERLINK_PATH);
+    const verifyLink=async (linkCode:string)=>{
+        toast.loading ("Veryfying", {
+           
+          });
+    }
+    const renderLinkLine=(l:ITransferLink)=>
+        <Row key={l.linkCode} className='py-2'>
+            <Col>{l.linkName}</Col>
+            <Col>{l.amount}</Col>
+            <Col>{l.fromAccountDetailModel.accountNumber} {l.fromAccountDetailModel.nickName}</Col>
+            <Col>{l.toAccountDetailModel.accountNumber} {l.toAccountDetailModel.nickName}</Col>
+            <Col>
+                <Row>
+                    <Col><Button onClick={(e)=>verifyLink(l.linkCode)}>Verify</Button></Col>
+                    <Col><Button>Transfer</Button></Col>
+                </Row>
+            </Col>
+        </Row>
 
     return (
             <>
@@ -176,6 +57,7 @@ const TransferLinks=()=>{
                     <Col >Amount</Col>
                     <Col>From</Col>
                     <Col>To</Col>
+                    <Col>Command</Col>
                 </Row>
                 {data && data.status==200 && data.data.map((t)=>renderLinkLine(t))}
 
