@@ -10,7 +10,7 @@ interface Props {
 }
 type setStateFunc = (asaState:IAsaState) => void;
 
-const initialData:IAsaState= JSON.parse(localStorage.getItem(STORAGE_KEY) || '0') || {asaConsumerCode:-1,token:undefined}  
+const initialData:IAsaState= JSON.parse(localStorage.getItem(STORAGE_KEY) || '0') || {asaConsumerCode:2146374978,token:'efewf'}  
 const AsaStateContext = createContext<[IAsaState,setStateFunc]>([initialData,(s)=>{}]);
  
 const AsaStateProvider = ({ children, ...props }: Props) => {

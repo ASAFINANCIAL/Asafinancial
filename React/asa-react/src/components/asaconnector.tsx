@@ -6,6 +6,7 @@ import {  useDataLoader } from './dataloader';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ConsumerInfo from "./ConsumeInfo";
 import Transfer from "./Transfer";
+import TransferLinks from "./TransferLinks";
 import Transactions from "./Transactions";
 import AccountTypes from "./AccountTypes";
 import Holdings from "./Holdings";
@@ -114,7 +115,7 @@ export default function AsaConnector() {
             <TabList className='fw-bold fs-4'>
                 <Tab>General</Tab>
                 <Tab disabled={!isLogged}>ConsumerInfo</Tab>
-                <Tab disabled={!isLogged}>Transfer</Tab>
+                <Tab disabled={!isLogged}>TransferLinks</Tab>
                 <Tab disabled={!isLogged}>Transactions</Tab>
                 <Tab disabled={!isLogged}>Holdings</Tab>
                 <Tab>AccountTypes</Tab>
@@ -126,7 +127,7 @@ export default function AsaConnector() {
                 <ConsumerInfo/>
             </TabPanel>
             <TabPanel>
-                <Transfer/>
+                <TransferLinks/>
             </TabPanel>
             <TabPanel>
                 <Transactions/>
