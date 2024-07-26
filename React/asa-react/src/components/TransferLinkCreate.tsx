@@ -17,7 +17,7 @@ interface PropsCreate{
 
 
 const TransferLinkCreate=({open,onclose}:PropsCreate)=>{
-    const formref=useRef<HTMLFormElement>(null)
+    //const formref=useRef<HTMLFormElement>(null)
     const [state,setState]=useContext(AsaStateContext)
     const [response,setresponse]=useState<string|null>()
     const [isCreating,setIsCreating]=useState(false)
@@ -66,7 +66,7 @@ const TransferLinkCreate=({open,onclose}:PropsCreate)=>{
             </Modal.Header>
   
             <Modal.Body >
-              <Form ref={formref} className='form-row p-3' onSubmit={(e)=> onSubmit(e)}>
+              <Form  className='form-row p-3' onSubmit={(e)=> onSubmit(e)}>
                 <Form.Group className='row' >
                   <Col>
                   <Form.Label>Link Name</Form.Label>
@@ -98,10 +98,14 @@ const TransferLinkCreate=({open,onclose}:PropsCreate)=>{
                         </Row>
                     </Col>
                 </Row>
+                <Row>
+                <Form.Text className="text-muted">
+                    Enter accountNumber from account_id below and accountFI from asaFiCode 
+                </Form.Text>
+                </Row>
 
 
-
-                <Button  type="submit" disabled={isCreating}>Create</Button>
+              <Button  type="submit" disabled={isCreating}>Create</Button>
               </Form>
               <Row className='p-3 mb-2 bg-info text-white'>
                 <Col >Response</Col>

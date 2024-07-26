@@ -37,7 +37,7 @@ interface IAccount{
 
 
 const renderAccount=(a:IAccount)=>
-    <Container className='text-start'>
+    <Container className='text-start' key={a.account_id}>
         <Row className='bg-primary text-white fw-bold fs-5'>Account Name {a.accountname}</Row>
         <AllProps src={a}/>
         <Row className='bg-secondary text-dark'>Balances
@@ -70,7 +70,7 @@ const Accounts=()=>{
         account_ids:[]
     }
 
-    const {data} = useAsaPostQuery<IAccountInstance[]>([TRANSACTIONS_PATH,state.asaConsumerCode],TRANSACTIONS_PATH,body);
+    const {data,isFetching} = useAsaPostQuery<IAccountInstance[]>([TRANSACTIONS_PATH,state.asaConsumerCode],TRANSACTIONS_PATH,body);
    
     if(data && data.status!==200){
         return(
@@ -88,7 +88,11 @@ const Accounts=()=>{
     }
     return (
         <>
-
+        {isFetching &&
+            <Row>
+                 <Spinner animation="grow" variant="warning" />
+            </Row>
+        }
         {data &&
             <Container>
                  {data.data.map((a)=>renderAccount(a.account))}

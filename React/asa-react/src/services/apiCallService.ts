@@ -52,6 +52,7 @@ const callApiGet =async (path:string,state:IAsaState)=>{
             `${Config.asaOpenApiUri}${path}`,
         {
             headers  :{...headers},
+            
         }
     )
         console.log(data)

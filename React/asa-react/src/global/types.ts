@@ -12,5 +12,14 @@ interface ITransferLink{
     toAccountDetailModel:IAccount
     [propName: string]: any
 }
+interface ITransfer{
+    asaTransactionId:number,
+    amount:number
+    transferStatus:string
+    confirmationNumber:string
+    transferDateTime:string
+    message:string
+    [propName: string]: any
+}
 
-export {type ITransferLink,type IAccount}
+export {type ITransferLink,type IAccount,type ITransfer}
