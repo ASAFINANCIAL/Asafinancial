@@ -10,6 +10,7 @@ import TransferLinks from "./TransferLinks";
 import Transactions from "./Transactions";
 import AccountTypes from "./AccountTypes";
 import Holdings from "./Holdings";
+import AccountDetails from './AccountDetails';
 import {apiCallAutorization} from '../services/apiCallService'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-tabs/style/react-tabs.css';
@@ -117,6 +118,7 @@ export default function AsaConnector() {
                 <Tab disabled={!isLogged}>ConsumerInfo</Tab>
                 <Tab disabled={!isLogged}>TransferLinks</Tab>
                 <Tab disabled={!isLogged}>Transfers</Tab>
+                <Tab disabled={!isLogged}>AccountDetails</Tab>
                 <Tab disabled={!isLogged}>Transactions</Tab>
                 <Tab disabled={!isLogged}>Holdings</Tab>
                 <Tab>AccountTypes</Tab>
@@ -132,6 +134,9 @@ export default function AsaConnector() {
             </TabPanel>
             <TabPanel>
                 <Transfer/>
+            </TabPanel>
+            <TabPanel>
+                <AccountDetails/>
             </TabPanel>
             <TabPanel>
                 <Transactions/>

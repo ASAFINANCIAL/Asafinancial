@@ -1,4 +1,4 @@
- interface IAccount{
+ interface IAccountCreate{
     accountNumber:string
     nickName:string,
     asaConsumerCode:string,
@@ -8,8 +8,8 @@ interface ITransferLink{
     linkName:string,
     amount:number,
     linkCode:string,
-    fromAccountDetailModel:IAccount,
-    toAccountDetailModel:IAccount
+    fromAccountDetailModel:IAccountCreate,
+    toAccountDetailModel:IAccountCreate
     [propName: string]: any
 }
 interface ITransfer{
@@ -21,5 +21,43 @@ interface ITransfer{
     message:string
     [propName: string]: any
 }
+interface IRequestTransaction{
+    asaConsumerCode:number
+    [propName: string]: any;
+}
+interface IAccountInstance{
+    account:IAccount
+}
+interface ITransaction{
+    amount:number,
+    description:string,
+    transactiondate:string
+    transactiontype:string
+    transactionid:string
+}
 
-export {type ITransferLink,type IAccount,type ITransfer}
+interface IBalance{
+    available:number,
+    current:number
+}
+interface IAccount{
+    account_id:string,
+    account_type:string,
+    accountname:string,
+    balances:IBalance
+    transactions:ITransaction[]
+}
+interface IAccountDetail{
+    balance:number
+    asaFiAccountCode:number
+    accountName:string
+    accountNumber:string
+    accountType:string
+    availableBalance:number
+    calculatedBalance:number
+    description:string
+}
+
+export {type ITransferLink,type IAccount,type ITransfer,
+        type IRequestTransaction,type IAccountInstance, type IAccountCreate,
+        type IAccountDetail}

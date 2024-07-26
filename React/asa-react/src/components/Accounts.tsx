@@ -3,37 +3,11 @@ import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import {useAsaPostQuery} from '../hooks/asaQuery'
 import { AsaStateContext} from '../components/asaStateProvider'
 
-
+import { IAccount,IRequestTransaction,IAccountInstance } from '../global/types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AllProps from './allprops';
 const TRANSACTIONS_PATH='Transactions'
 
-interface IRequestTransaction{
-    asaConsumerCode:number
-    [propName: string]: any;
-}
-interface IAccountInstance{
-    account:IAccount
-}
-interface ITransaction{
-    amount:number,
-    description:string,
-    transactiondate:string
-    transactiontype:string
-    transactionid:string
-}
-
-interface IBalance{
-    available:number,
-    current:number
-}
-interface IAccount{
-    account_id:string,
-    account_type:string,
-    accountname:string,
-    balances:IBalance
-    transactions:ITransaction[]
-}
 
 
 const renderAccount=(a:IAccount)=>
