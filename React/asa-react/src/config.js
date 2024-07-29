@@ -1,4 +1,5 @@
 class Config{
+
     static asaOpenApiUri= "https://asaopenapi-api-dev.azurewebsites.net/";
     static subscriptionKey="b98a2ffde7864380846ab6fb34e435e4";
     static asafintechCode= "724633052";

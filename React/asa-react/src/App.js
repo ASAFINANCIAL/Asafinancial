@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const queryClient = new QueryClient();
 function App() {
   return (
-    <div className="App">
+    <div className="App asa-container">
       <ErrorBoundary>
         <AsaStateProvider>
           <DataLoaderProvider>

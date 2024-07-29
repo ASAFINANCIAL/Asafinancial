@@ -80,7 +80,7 @@ const Transactions=()=>{
    
     if(data && data.status!==200){
         return(
-            <Container className='text-start'>
+            <Container className='text-start asa-tab-data-in'>
             <Row>
                 <Col>Status</Col>
                 <Col>{data.status}</Col>
@@ -95,7 +95,7 @@ const Transactions=()=>{
     return (
         <>
         {data &&
-            <Container>
+            <Container className='text-start asa-tab-data-in'>
                  {data.data.map((a)=>renderAccount(a.account))}
             </Container>
         }

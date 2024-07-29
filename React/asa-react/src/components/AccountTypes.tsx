@@ -28,7 +28,7 @@ const AccountTypes=()=>{
     }
     if(data && data.status!==200){
         return(
-            <Container className='text-start'>
+            <Container className='text-start asa-tab-data'>
             <Row>
                 <Col>Status</Col>
                 <Col>{data.status}</Col>
@@ -42,7 +42,7 @@ const AccountTypes=()=>{
     }
     return (
 
-            <Container className='text-start'>
+            <Container className='text-start asa-tab-data-in'>
                 <Row className='fw-bold fs-4'>
                     <Col>accountType</Col>
                     <Col sm={6}>description</Col>

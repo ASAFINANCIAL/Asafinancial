@@ -10,11 +10,13 @@ import TransferLinks from "./TransferLinks";
 import Transactions from "./Transactions";
 import AccountTypes from "./AccountTypes";
 import Holdings from "./Holdings";
+import Healthy from "./Healthy";
 import AccountDetails from './AccountDetails';
 import NetWorth from './Networth';
 import {apiCallAutorization} from '../services/apiCallService'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-tabs/style/react-tabs.css';
+
 
 
 // we can't use state, due to event came from external source and state not accesible
@@ -90,6 +92,7 @@ export default function AsaConnector() {
     } 
      
     return (
+
     <>
     <Navbar className="bg-body-tertiary">
       <Container>
@@ -112,7 +115,7 @@ export default function AsaConnector() {
         }
       </Container>
     </Navbar>
-    <Container>
+    <Container className='asa-container'>
             <Tabs >
             <TabList className='fw-bold fs-4'>
                 <Tab>General</Tab>
@@ -124,6 +127,7 @@ export default function AsaConnector() {
                 <Tab disabled={!isLogged}>Holdings</Tab>
                 <Tab disabled={!isLogged}>Networth</Tab>
                 <Tab>AccountTypes</Tab>
+                <Tab>Healthy</Tab>
             </TabList>
             <TabPanel>
                 
@@ -152,7 +156,9 @@ export default function AsaConnector() {
             <TabPanel>
                 <AccountTypes/>
             </TabPanel>
-
+            <TabPanel>
+                <Healthy/>
+            </TabPanel>
             </Tabs>
     </Container>
      </>

@@ -1,3 +1,9 @@
+html,body {
+  height: 100%;
+}
+#root {
+  height: 100%;
+}
 .App {
   text-align: center;
 }
@@ -37,6 +43,117 @@
   }
 }
 
+
 .modal-90w{
   min-width: 90%;
+}
+.asa-container{
+  position: relative;
+  width: 100%;
+  height: 96%;
+  left: 0px;
+  top: 0px;
+
+  background: #6911D5;
+  border-radius: 50px;
+  
+  margin: 0 !important;
+  max-width: unset !important; 
+  padding-bottom: 80px;
+}
+.asa-app{
+  position: relative;
+  width: 100%;
+  height: 90%;
+  left: 0px;
+  top: 0px;
+
+  background: #6911D5;
+  border-radius: 50px;
+  
+  margin: 0 !important;
+  max-width: unset !important; 
+}
+
+.asa-navbar{
+  background:transparent;
+
+}
+.asa-grey{
+  color: rgba(185, 186, 190, 1) !important;
+}
+
+.asa-container-main{
+  width: 100%;
+  height: 95%;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important; 
+}
+
+.asa-nav-tab,.asa-nav-tab > li {
+  background: #6911D5;
+  color: rgba(185, 186, 190, 1) !important;
+}
+
+.asa-tab-data{
+  position: relative;
+
+  width: 100%;
+  height: 90%;
+  max-width: 100% !important;
+  background: rgba(185, 186, 190, 1) ;
+  border-radius: 50px;
+  padding: 0 !important;
+  margin: 0 !important; 
+}
+.asa-nav-tab >  li.react-tabs__tab--selected {
+  color: #6911D5 !important;
+  background:rgba(185, 186, 190, 1) !important;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  position: relative;
+
+}
+.asa-container-data{
+  position: relative;
+
+  width: 100%;
+  height: 90%;
+  max-width: 100% !important;
+  background: rgba(185, 186, 190, 1) ;
+  border-radius: 50px;
+  padding: 0 !important;
+  margin: 0 !important; 
+
+}
+.react-tabs{
+  position: relative;
+
+  width: 100%;
+  height: 90%;
+}
+.react-tabs__tab{
+  color: orange;
+}
+.react-tabs__tab-panel--selected{
+ 
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+ 
+}
+.asa-tab-data-in{
+  position: absolute;
+  overflow-y: auto;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  max-width: unset !important;
+  background:  rgba(185, 186, 190, 1);
+  border-radius: 20px;
 }
