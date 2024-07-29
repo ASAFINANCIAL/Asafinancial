@@ -11,6 +11,7 @@ import Transactions from "./Transactions";
 import AccountTypes from "./AccountTypes";
 import Holdings from "./Holdings";
 import AccountDetails from './AccountDetails';
+import NetWorth from './Networth';
 import {apiCallAutorization} from '../services/apiCallService'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-tabs/style/react-tabs.css';
@@ -121,6 +122,7 @@ export default function AsaConnector() {
                 <Tab disabled={!isLogged}>AccountDetails</Tab>
                 <Tab disabled={!isLogged}>Transactions</Tab>
                 <Tab disabled={!isLogged}>Holdings</Tab>
+                <Tab disabled={!isLogged}>Networth</Tab>
                 <Tab>AccountTypes</Tab>
             </TabList>
             <TabPanel>
@@ -143,6 +145,9 @@ export default function AsaConnector() {
             </TabPanel>
             <TabPanel>
                 <Holdings/>
+            </TabPanel>
+            <TabPanel>
+                <NetWorth/>
             </TabPanel>
             <TabPanel>
                 <AccountTypes/>

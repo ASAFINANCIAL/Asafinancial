@@ -57,7 +57,31 @@ interface IAccountDetail{
     calculatedBalance:number
     description:string
 }
+interface INetWorthTrend{
+    fIAccountName:string
+    fiAccountCalculatedBalance:number
+    fiAccountCalculatedBalanceChange:number
+    fiStatus:string
+}
+interface INetworth{
+    period:string
+    endPeriod:string
+    startPeriod:string
+    netWorthTrends:INetWorthTrend[]
+    fiCalculatedBalance:INetworthCalcBalance
+}
+interface INetworthCalcBalance{
+    networth:number
+    changeNetworth:number
+    changePercent:number
+    asset:number
+    changeAsset:number
+    changeAssetPercent:number
+    liability:number
+    changeLiability:number
+    changeLiabilityPercent:number
+}
 
 export {type ITransferLink,type IAccount,type ITransfer,
         type IRequestTransaction,type IAccountInstance, type IAccountCreate,
-        type IAccountDetail}
+        type IAccountDetail,type INetworth, type INetWorthTrend}
